@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClubCalendar Configuration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6b 100%);
+            color: white;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #f8f9fa;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .form-group .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+        input[type="color"] {
+            width: 60px;
+            height: 36px;
+            padding: 2px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .color-input-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-input-group input[type="text"] {
+            width: 120px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        /* Advanced Section */
+        .advanced-toggle {
+            background: none;
+            border: none;
+            color: #2c5aa0;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0;
+        }
+
+        .advanced-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .advanced-toggle .arrow {
+            transition: transform 0.2s;
+        }
+
+        .advanced-toggle.open .arrow {
+            transform: rotate(90deg);
+        }
+
+        .advanced-section {
+            display: none;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .advanced-section.open {
+            display: block;
+        }
+
+        /* Rules List */
+        .rules-list {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            background: #fafafa;
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+        .rule-item select,
+        .rule-item input[type="text"] {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .rule-item .remove-btn {
+            background: none;
+            border: none;
+            color: #c62828;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .rule-item .remove-btn:hover {
+            background: #ffebee;
+            border-radius: 4px;
+        }
+
+        .add-rule-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: none;
+            color: #2c5aa0;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .add-rule-btn:hover {
+            background: #e3f2fd;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #2c5aa0;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #234a80;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        /* Preview Panel */
+        .preview-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-panel.open {
+            transform: translateX(0);
+        }
+
+        .preview-header {
+            padding: 16px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .preview-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .preview-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .preview-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        /* Embed Code */
+        .embed-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .copy-btn {
+            margin-top: 12px;
+        }
+
+        /* Status Messages */
+        .status {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .status.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .status.error {
+            display: block;
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .preview-panel {
+                width: 100%;
+            }
+
+            .checkbox-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>ClubCalendar</h1>
+        <p>Configure your event calendar widget</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <div id="status" class="status"></div>
+
+    <!-- Basic Settings -->
+    <div class="card">
+        <div class="card-header">Basic Settings</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="widgetTitle">Widget Title</label>
+                <input type="text" id="widgetTitle" value="Find Events" placeholder="Find Events">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Primary Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="primaryColor" value="#2c5aa0">
+                        <input type="text" id="primaryColorHex" value="#2c5aa0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Accent Color</label>
+                    <div class="color-input-group">
+                        <input type="color" id="accentColor" value="#d4a800">
+                        <input type="text" id="accentColorHex" value="#d4a800">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="defaultView">Default View</label>
+                <select id="defaultView">
+                    <option value="dayGridMonth">Month</option>
+                    <option value="listMonth">List</option>
+                    <option value="timeGridWeek">Week</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+        <div class="card-header">Filters to Display</div>
+        <div class="card-body">
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="filterInterest" checked>
+                    <label for="filterInterest">Interest Area</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="filterCommittee" checked>
+                    <label for="filterCommittee">Committee</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="filterCost" checked>
+                    <label for="filterCost">Cost</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="filterTimeOfDay" checked>
+                    <label for="filterTimeOfDay">Time of Day</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Filters -->
+    <div class="card">
+        <div class="card-header">Quick Filter Buttons</div>
+        <div class="card-body">
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="qfWeekend" checked>
+                    <label for="qfWeekend">Weekend</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="qfFree" checked>
+                    <label for="qfFree">Free</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="qfHasOpenings" checked>
+                    <label for="qfHasOpenings">Has Openings</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="qfNewbieFriendly" checked>
+                    <label for="qfNewbieFriendly">Newbie Friendly</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="qfPublicEvent">
+                    <label for="qfPublicEvent">Public Events</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Settings -->
+    <div class="card">
+        <div class="card-header">
+            <span>Additional Options</span>
+            <button class="advanced-toggle" onclick="toggleAdvanced()">
+                <span class="arrow">▶</span> Advanced Settings
+            </button>
+        </div>
+        <div class="card-body">
+            <div id="advancedSection" class="advanced-section">
+
+                <!-- Auto-Tag Rules -->
+                <div class="form-group">
+                    <label>Auto-Tagging Rules</label>
+                    <p class="help-text">Automatically add tags based on event name patterns</p>
+                    <div class="rules-list" id="autoTagRules">
+                        <div class="rule-item">
+                            <select>
+                                <option value="name-prefix">Name starts with</option>
+                                <option value="name-contains">Name contains</option>
+                            </select>
+                            <input type="text" placeholder="Pattern (e.g., Happy Hikers:)">
+                            <input type="text" placeholder="Tag (e.g., committee:happy-hikers)">
+                            <button class="remove-btn" onclick="removeRule(this)">&times;</button>
+                        </div>
+                    </div>
+                    <button class="add-rule-btn" onclick="addRule()">+ Add Rule</button>
+                </div>
+
+                <!-- API Settings -->
+                <div class="form-group">
+                    <label for="waAccountId">Wild Apricot Account ID</label>
+                    <input type="text" id="waAccountId" placeholder="123456">
+                    <p class="help-text">Found in WA Admin → Settings → General</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="syncInterval">Sync Interval (minutes)</label>
+                    <input type="number" id="syncInterval" value="15" min="5" max="60">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="eventsJsonUrl">Events JSON URL</label>
+                        <input type="url" id="eventsJsonUrl" placeholder="https://storage.googleapis.com/...">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+        <button class="btn btn-primary" onclick="saveConfig()">Save Configuration</button>
+        <button class="btn btn-secondary" onclick="openPreview()">Preview Widget</button>
+        <button class="btn btn-secondary" onclick="showEmbedCode()">Get Embed Code</button>
+    </div>
+
+</div>
+
+<!-- Preview Panel -->
+<div id="previewPanel" class="preview-panel">
+    <div class="preview-header">
+        <h3>Widget Preview</h3>
+        <button class="preview-close" onclick="closePreview()">&times;</button>
+    </div>
+    <div class="preview-content">
+        <div id="previewContainer"></div>
+    </div>
+</div>
+
+<!-- Embed Code Modal -->
+<div id="embedModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+    <div style="background:white; border-radius:12px; max-width:600px; width:90%; max-height:80vh; overflow:auto;">
+        <div style="padding:20px; border-bottom:1px solid #e0e0e0; display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0;">Embed Code</h3>
+            <button onclick="closeEmbedModal()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+        </div>
+        <div style="padding:20px;">
+            <p>Copy and paste this code into your Wild Apricot page:</p>
+            <div class="embed-code" id="embedCode"></div>
+            <button class="btn btn-primary copy-btn" onclick="copyEmbedCode()">Copy to Clipboard</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Color picker sync
+    document.getElementById('primaryColor').addEventListener('input', function() {
+        document.getElementById('primaryColorHex').value = this.value;
+    });
+    document.getElementById('primaryColorHex').addEventListener('input', function() {
+        document.getElementById('primaryColor').value = this.value;
+    });
+    document.getElementById('accentColor').addEventListener('input', function() {
+        document.getElementById('accentColorHex').value = this.value;
+    });
+    document.getElementById('accentColorHex').addEventListener('input', function() {
+        document.getElementById('accentColor').value = this.value;
+    });
+
+    // Toggle advanced section
+    function toggleAdvanced() {
+        const section = document.getElementById('advancedSection');
+        const toggle = document.querySelector('.advanced-toggle');
+        section.classList.toggle('open');
+        toggle.classList.toggle('open');
+    }
+
+    // Add auto-tag rule
+    function addRule() {
+        const list = document.getElementById('autoTagRules');
+        const addBtn = list.querySelector('.add-rule-btn');
+
+        const ruleHtml = `
+            <div class="rule-item">
+                <select>
+                    <option value="name-prefix">Name starts with</option>
+                    <option value="name-contains">Name contains</option>
+                </select>
+                <input type="text" placeholder="Pattern (e.g., Happy Hikers:)">
+                <input type="text" placeholder="Tag (e.g., committee:happy-hikers)">
+                <button class="remove-btn" onclick="removeRule(this)">&times;</button>
+            </div>
+        `;
+
+        addBtn.insertAdjacentHTML('beforebegin', ruleHtml);
+    }
+
+    // Remove rule
+    function removeRule(btn) {
+        btn.closest('.rule-item').remove();
+    }
+
+    // Build config from form
+    function buildConfig() {
+        const config = {
+            title: document.getElementById('widgetTitle').value,
+            primaryColor: document.getElementById('primaryColor').value,
+            accentColor: document.getElementById('accentColor').value,
+            defaultView: document.getElementById('defaultView').value,
+            filters: {
+                interestArea: { enabled: document.getElementById('filterInterest').checked },
+                committee: { enabled: document.getElementById('filterCommittee').checked },
+                cost: { enabled: document.getElementById('filterCost').checked },
+                timeOfDay: { enabled: document.getElementById('filterTimeOfDay').checked }
+            },
+            quickFilters: {
+                weekend: { enabled: document.getElementById('qfWeekend').checked, label: 'Weekend' },
+                free: { enabled: document.getElementById('qfFree').checked, label: 'Free' },
+                hasOpenings: { enabled: document.getElementById('qfHasOpenings').checked, label: 'Has Openings' },
+                newbieFriendly: { enabled: document.getElementById('qfNewbieFriendly').checked, label: 'Newbie Friendly' },
+                publicEvent: { enabled: document.getElementById('qfPublicEvent').checked, label: 'Public Events' }
+            },
+            eventsUrl: document.getElementById('eventsJsonUrl').value,
+            waAccountId: document.getElementById('waAccountId').value,
+            syncInterval: parseInt(document.getElementById('syncInterval').value) || 15
+        };
+
+        // Collect auto-tag rules
+        config.autoTagRules = [];
+        document.querySelectorAll('#autoTagRules .rule-item').forEach(item => {
+            const inputs = item.querySelectorAll('input');
+            const select = item.querySelector('select');
+            if (inputs[0].value && inputs[1].value) {
+                config.autoTagRules.push({
+                    type: select.value,
+                    pattern: inputs[0].value,
+                    tag: inputs[1].value
+                });
+            }
+        });
+
+        return config;
+    }
+
+    // Save configuration
+    function saveConfig() {
+        const config = buildConfig();
+
+        // In production, this would POST to the server
+        // For now, save to localStorage
+        localStorage.setItem('clubcalendar-config', JSON.stringify(config));
+
+        showStatus('Configuration saved successfully!', 'success');
+    }
+
+    // Show status message
+    function showStatus(message, type) {
+        const status = document.getElementById('status');
+        status.textContent = message;
+        status.className = 'status ' + type;
+
+        setTimeout(() => {
+            status.className = 'status';
+        }, 3000);
+    }
+
+    // Open preview panel
+    function openPreview() {
+        document.getElementById('previewPanel').classList.add('open');
+
+        // In production, would load the actual widget
+        document.getElementById('previewContainer').innerHTML = `
+            <div style="background:#f8f9fa; padding:40px; text-align:center; border-radius:8px;">
+                <p style="color:#666;">Widget preview would appear here.</p>
+                <p style="color:#999; font-size:13px;">Configure the Events JSON URL to see live data.</p>
+            </div>
+        `;
+    }
+
+    // Close preview panel
+    function closePreview() {
+        document.getElementById('previewPanel').classList.remove('open');
+    }
+
+    // Show embed code modal
+    function showEmbedCode() {
+        const config = buildConfig();
+
+        const code = `<!-- ClubCalendar Widget -->
+<div id="clubcalendar"></div>
+<script>
+window.CLUBCALENDAR_CONFIG = {
+    eventsUrl: '${config.eventsUrl || 'YOUR_EVENTS_JSON_URL'}',
+    title: '${config.title}',
+    primaryColor: '${config.primaryColor}',
+    accentColor: '${config.accentColor}',
+    defaultView: '${config.defaultView}'
+};
+<\/script>
+<script src="https://storage.googleapis.com/clubcalendar/widget/clubcalendar-widget.js"><\/script>`;
+
+        document.getElementById('embedCode').textContent = code;
+        document.getElementById('embedModal').style.display = 'flex';
+    }
+
+    // Close embed modal
+    function closeEmbedModal() {
+        document.getElementById('embedModal').style.display = 'none';
+    }
+
+    // Copy embed code
+    function copyEmbedCode() {
+        const code = document.getElementById('embedCode').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            showStatus('Embed code copied to clipboard!', 'success');
+            closeEmbedModal();
+        });
+    }
+
+    // Load saved config on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const saved = localStorage.getItem('clubcalendar-config');
+        if (saved) {
+            try {
+                const config = JSON.parse(saved);
+
+                document.getElementById('widgetTitle').value = config.title || 'Find Events';
+                document.getElementById('primaryColor').value = config.primaryColor || '#2c5aa0';
+                document.getElementById('primaryColorHex').value = config.primaryColor || '#2c5aa0';
+                document.getElementById('accentColor').value = config.accentColor || '#d4a800';
+                document.getElementById('accentColorHex').value = config.accentColor || '#d4a800';
+                document.getElementById('defaultView').value = config.defaultView || 'dayGridMonth';
+
+                if (config.filters) {
+                    document.getElementById('filterInterest').checked = config.filters.interestArea?.enabled !== false;
+                    document.getElementById('filterCommittee').checked = config.filters.committee?.enabled !== false;
+                    document.getElementById('filterCost').checked = config.filters.cost?.enabled !== false;
+                    document.getElementById('filterTimeOfDay').checked = config.filters.timeOfDay?.enabled !== false;
+                }
+
+                if (config.quickFilters) {
+                    document.getElementById('qfWeekend').checked = config.quickFilters.weekend?.enabled !== false;
+                    document.getElementById('qfFree').checked = config.quickFilters.free?.enabled !== false;
+                    document.getElementById('qfHasOpenings').checked = config.quickFilters.hasOpenings?.enabled !== false;
+                    document.getElementById('qfNewbieFriendly').checked = config.quickFilters.newbieFriendly?.enabled !== false;
+                    document.getElementById('qfPublicEvent').checked = config.quickFilters.publicEvent?.enabled === true;
+                }
+
+                document.getElementById('eventsJsonUrl').value = config.eventsUrl || '';
+                document.getElementById('waAccountId').value = config.waAccountId || '';
+                document.getElementById('syncInterval').value = config.syncInterval || 15;
+
+            } catch (e) {
+                console.error('Failed to load saved config:', e);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

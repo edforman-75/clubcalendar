@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Config files with secrets
+config.json
+/etc/clubcalendar/
+
+# Generated data (not committed)
+data/
+*.json.bak
+
+# Build artifacts
+build-site.py
+site/docs/template.html
+
+# Local testing
+.env
+.env.local

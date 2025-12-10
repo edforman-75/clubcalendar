@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Tagging Guide - ClubCalendar</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e4080;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+
+        .header nav a:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2rem; margin-top: 0; }
+        h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1.1rem; }
+
+        p {
+            margin: 1em 0;
+        }
+
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        /* Code */
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background: var(--bg-alt);
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <h1><a href="../index.html">ClubCalendar</a></h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="https://github.com/sbnewcomers/clubcalendar">GitHub</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+
+    <h1 id="clubcalendar-event-tagging-guide">ClubCalendar Event Tagging
+Guide</h1>
+<p><strong>For Event Organizers</strong></p>
+<p>This guide explains how to tag events in Wild Apricot so they appear
+correctly in ClubCalendar filters.</p>
+<hr />
+<h2 id="quick-reference">Quick Reference</h2>
+<p>When creating or editing an event in Wild Apricot, add tags in the
+<strong>Tags</strong> field. Use these formats:</p>
+<table>
+<thead>
+<tr>
+<th>What You Want</th>
+<th>Tag to Add</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Food-related event</td>
+<td><code>activity:food</code></td>
+</tr>
+<tr>
+<td>Wine event</td>
+<td><code>activity:wine</code></td>
+</tr>
+<tr>
+<td>Outdoor/hiking event</td>
+<td><code>activity:outdoors</code></td>
+</tr>
+<tr>
+<td>Arts &amp; culture event</td>
+<td><code>activity:arts</code></td>
+</tr>
+<tr>
+<td>Games event</td>
+<td><code>activity:games</code></td>
+</tr>
+<tr>
+<td>Fitness event</td>
+<td><code>activity:fitness</code></td>
+</tr>
+<tr>
+<td>Social/happy hour</td>
+<td><code>activity:social</code></td>
+</tr>
+<tr>
+<td>Free event</td>
+<td><code>cost:free</code></td>
+</tr>
+<tr>
+<td>Under $25</td>
+<td><code>cost:under-25</code></td>
+</tr>
+<tr>
+<td>Under $50</td>
+<td><code>cost:under-50</code></td>
+</tr>
+<tr>
+<td>Good for new members</td>
+<td><code>newbie-friendly</code></td>
+</tr>
+<tr>
+<td>Open to public/guests</td>
+<td><code>public-event</code></td>
+</tr>
+<tr>
+<td>Beginner level</td>
+<td><code>level:beginner</code></td>
+</tr>
+<tr>
+<td>Indoor event</td>
+<td><code>indoor</code></td>
+</tr>
+<tr>
+<td>Outdoor event</td>
+<td><code>outdoor</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="whats-automatic-vs.-manual">What’s Automatic vs. Manual</h2>
+<h3 id="you-dont-need-to-tag-automatic">You DON’T Need to Tag
+(Automatic)</h3>
+<p>ClubCalendar figures these out automatically:</p>
+<table>
+<thead>
+<tr>
+<th>Filter</th>
+<th>How It’s Determined</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Time of Day</strong></td>
+<td>From event start time (morning/afternoon/evening)</td>
+</tr>
+<tr>
+<td><strong>Weekend</strong></td>
+<td>From event date</td>
+</tr>
+<tr>
+<td><strong>Has Openings</strong></td>
+<td>From registration count vs. limit</td>
+</tr>
+<tr>
+<td><strong>Committee</strong></td>
+<td>From event name prefix (e.g., “Happy Hikers:”)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="you-do-need-to-tag-manual">You DO Need to Tag (Manual)</h3>
+<p>These require you to add tags:</p>
+<table>
+<thead>
+<tr>
+<th>Filter</th>
+<th>Why Manual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Activity Type</strong></td>
+<td>System can’t reliably guess from event name</td>
+</tr>
+<tr>
+<td><strong>Cost Category</strong></td>
+<td>Price fields may vary; explicit is better</td>
+</tr>
+<tr>
+<td><strong>Newbie-Friendly</strong></td>
+<td>Only you know if event is good for new members</td>
+</tr>
+<tr>
+<td><strong>Public Event</strong></td>
+<td>Only you know if guests are welcome</td>
+</tr>
+<tr>
+<td><strong>Skill Level</strong></td>
+<td>Only you know the required experience</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tag-format-rules">Tag Format Rules</h2>
+<h3 id="use-lowercase">Use Lowercase</h3>
+<pre><code>✓ activity:wine
+✗ Activity:Wine
+✗ ACTIVITY:WINE</code></pre>
+<h3 id="use-hyphens-not-spaces">Use Hyphens, Not Spaces</h3>
+<pre><code>✓ newbie-friendly
+✗ newbie friendly
+✗ newbie_friendly</code></pre>
+<h3 id="use-categoryvalue-for-structured-tags">Use Category:Value for
+Structured Tags</h3>
+<pre><code>✓ activity:hiking
+✓ cost:under-25
+✓ level:beginner</code></pre>
+<h3 id="use-single-words-for-simple-tags">Use Single Words for Simple
+Tags</h3>
+<pre><code>✓ outdoor
+✓ indoor
+✓ newbie-friendly</code></pre>
+<hr />
+<h2 id="complete-tag-list">Complete Tag List</h2>
+<h3 id="activity-types-activity">Activity Types
+(<code>activity:</code>)</h3>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>activity:food</code></td>
+<td>Dinners, lunches, cooking classes, restaurant outings</td>
+</tr>
+<tr>
+<td><code>activity:wine</code></td>
+<td>Wine tastings, vineyard tours, wine education</td>
+</tr>
+<tr>
+<td><code>activity:beer</code></td>
+<td>Brewery tours, beer tastings</td>
+</tr>
+<tr>
+<td><code>activity:outdoors</code></td>
+<td>Hiking, walking, nature activities</td>
+</tr>
+<tr>
+<td><code>activity:fitness</code></td>
+<td>Exercise classes, sports, active recreation</td>
+</tr>
+<tr>
+<td><code>activity:arts</code></td>
+<td>Theater, concerts, museums, galleries</td>
+</tr>
+<tr>
+<td><code>activity:games</code></td>
+<td>Board games, card games, trivia</td>
+</tr>
+<tr>
+<td><code>activity:books</code></td>
+<td>Book clubs, reading groups</td>
+</tr>
+<tr>
+<td><code>activity:travel</code></td>
+<td>Day trips, overnight travel</td>
+</tr>
+<tr>
+<td><code>activity:social</code></td>
+<td>Happy hours, mixers, general social</td>
+</tr>
+<tr>
+<td><code>activity:education</code></td>
+<td>Classes, lectures, learning</td>
+</tr>
+<tr>
+<td><code>activity:wellness</code></td>
+<td>Yoga, meditation, health topics</td>
+</tr>
+<tr>
+<td><code>activity:garden</code></td>
+<td>Gardening, plant-related activities</td>
+</tr>
+<tr>
+<td><code>activity:crafts</code></td>
+<td>Art projects, DIY, creative activities</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cost-categories-cost">Cost Categories (<code>cost:</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cost:free</code></td>
+<td>No charge to attend</td>
+</tr>
+<tr>
+<td><code>cost:under-25</code></td>
+<td>Total cost under $25</td>
+</tr>
+<tr>
+<td><code>cost:under-50</code></td>
+<td>Total cost $25-49</td>
+</tr>
+<tr>
+<td><code>cost:under-100</code></td>
+<td>Total cost $50-99</td>
+</tr>
+<tr>
+<td><code>cost:over-100</code></td>
+<td>Total cost $100+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> Use the total cost to the member, including
+any food/drinks they’ll pay for.</p>
+<h3 id="skillexperience-level-level">Skill/Experience Level
+(<code>level:</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>level:beginner</code></td>
+<td>No prior experience needed</td>
+</tr>
+<tr>
+<td><code>level:intermediate</code></td>
+<td>Some experience helpful</td>
+</tr>
+<tr>
+<td><code>level:advanced</code></td>
+<td>Significant experience required</td>
+</tr>
+</tbody>
+</table>
+<h3 id="location-type">Location Type</h3>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>indoor</code></td>
+<td>Event is indoors</td>
+</tr>
+<tr>
+<td><code>outdoor</code></td>
+<td>Event is outdoors</td>
+</tr>
+</tbody>
+</table>
+<p>If an event is both (e.g., starts outdoors, moves inside), you can
+add both tags.</p>
+<h3 id="audience-tags">Audience Tags</h3>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>newbie-friendly</code></td>
+<td>Especially welcoming to new members</td>
+</tr>
+<tr>
+<td><code>public-event</code></td>
+<td>Non-members/guests can attend</td>
+</tr>
+<tr>
+<td><code>members-only</code></td>
+<td>Restricted to members</td>
+</tr>
+<tr>
+<td><code>couples</code></td>
+<td>Designed for couples</td>
+</tr>
+<tr>
+<td><code>singles-welcome</code></td>
+<td>Singles explicitly welcome</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="examples">Examples</h2>
+<h3 id="example-1-morning-hike">Example 1: Morning Hike</h3>
+<p><strong>Event Name:</strong> Happy Hikers: Coastal Bluff Trail</p>
+<p><strong>Tags to Add:</strong></p>
+<pre><code>activity:outdoors, cost:free, newbie-friendly, outdoor, level:beginner</code></pre>
+<p><strong>What’s Automatic:</strong> - Committee:
+<code>happy-hikers</code> (from name prefix) - Time:
+<code>morning</code> (from 9am start time) - Day: <code>weekend</code>
+(from Saturday date) - Availability: <code>open</code> (from
+registration count)</p>
+<h3 id="example-2-wine-dinner">Example 2: Wine Dinner</h3>
+<p><strong>Event Name:</strong> Wine Appreciation: Holiday Wine
+Dinner</p>
+<p><strong>Tags to Add:</strong></p>
+<pre><code>activity:wine, activity:food, cost:under-100, indoor</code></pre>
+<p><strong>What’s Automatic:</strong> - Committee:
+<code>wine-appreciation</code> (from name prefix) - Time:
+<code>evening</code> (from 6pm start time) - Availability:
+<code>limited</code> (from 3 spots remaining)</p>
+<h3 id="example-3-public-game-night">Example 3: Public Game Night</h3>
+<p><strong>Event Name:</strong> Games!: Family Board Game Night</p>
+<p><strong>Tags to Add:</strong></p>
+<pre><code>activity:games, cost:free, newbie-friendly, public-event, indoor, level:beginner</code></pre>
+<p><strong>What’s Automatic:</strong> - Committee: <code>games</code>
+(from name prefix) - Time: <code>evening</code> (from 7pm start time) -
+Day: <code>weekend</code> (from Friday date) - Availability:
+<code>open</code> (from registration count)</p>
+<hr />
+<h2 id="adding-tags-in-wild-apricot">Adding Tags in Wild Apricot</h2>
+<ol type="1">
+<li>Go to <strong>Events</strong> in WA admin</li>
+<li>Click on the event to edit</li>
+<li>Scroll to the <strong>Tags</strong> field</li>
+<li>Type tags separated by commas</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<p><strong>Screenshot location:</strong> [Add screenshot of WA tags
+field here]</p>
+<hr />
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h3 id="wrong">Wrong</h3>
+<pre><code>Activity: Wine          ← Don&#39;t capitalize
+activity : wine         ← No spaces around colon
+activity_wine           ← Use colon, not underscore
+wine                    ← Missing category prefix</code></pre>
+<h3 id="right">Right</h3>
+<pre><code>activity:wine</code></pre>
+<hr />
+<h2 id="questions">Questions?</h2>
+<p>If you’re unsure what tags to use, ask yourself:</p>
+<ol type="1">
+<li><strong>What type of activity is this?</strong> →
+<code>activity:</code> tag</li>
+<li><strong>How much will it cost members?</strong> → <code>cost:</code>
+tag</li>
+<li><strong>Would a brand-new member feel comfortable?</strong> →
+<code>newbie-friendly</code></li>
+<li><strong>Can non-members attend?</strong> →
+<code>public-event</code></li>
+<li><strong>Is it indoors or outdoors?</strong> → <code>indoor</code> or
+<code>outdoor</code></li>
+<li><strong>Does it require special skills?</strong> →
+<code>level:</code> tag</li>
+</ol>
+<p>When in doubt, fewer tags are better than wrong tags. The automatic
+tags handle the most important filters.</p>
+<hr />
+<p><em>This guide is for ClubCalendar v1.0</em></p>
+</main>
+
+<footer class="footer">
+    <p>ClubCalendar — Open source calendar widget for Wild Apricot</p>
+</footer>
+
+</body>
+</html>

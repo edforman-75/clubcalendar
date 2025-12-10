@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClubCalendar - Enhanced Calendar Widget for Wild Apricot</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e4080;
+            --accent: #4CAF50;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .header .tagline {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .header .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            text-decoration: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        section.alt {
+            background: var(--bg-alt);
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .feature h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature p {
+            color: var(--text-light);
+        }
+
+        /* How it works */
+        .diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .diagram pre {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .step h4 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Setup options */
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .option {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .option-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .option-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .option-header .subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .option-body {
+            padding: 25px;
+        }
+
+        .option-body ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .option-body li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .option-body li::before {
+            content: "✓";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .option-body .btn {
+            display: block;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-body .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Docs */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .doc-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .doc-card h4 {
+            margin-bottom: 8px;
+        }
+
+        .doc-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        /* Code block */
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .tag {
+            color: #569cd6;
+        }
+
+        .code-block .attr {
+            color: #9cdcfe;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #9cf;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .tagline {
+                font-size: 1.1rem;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            section h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <h1>ClubCalendar</h1>
+        <p class="tagline">Enhanced Event Calendar Widget for Wild Apricot</p>
+        <div class="buttons">
+            <a href="#setup" class="btn btn-primary">Get Started</a>
+            <a href="https://github.com/sbnewcomers/clubcalendar" class="btn btn-secondary">View on GitHub</a>
+        </div>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <h2>Why ClubCalendar?</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Smart Filtering</h3>
+                <p>Let visitors filter events by activity type, time of day, availability, and custom categories. Find the right event in seconds.</p>
+            </div>
+            <div class="feature">
+                <h3>Auto-Tagging</h3>
+                <p>Automatically categorize events based on naming patterns. "Happy Hikers: Trail Walk" gets tagged as a hiking event automatically.</p>
+            </div>
+            <div class="feature">
+                <h3>Modern Design</h3>
+                <p>Clean, responsive calendar that looks great on desktop and mobile. Customizable colors to match your organization's branding.</p>
+            </div>
+            <div class="feature">
+                <h3>Easy Setup</h3>
+                <p>Simple embed code works on any Wild Apricot page. No coding skills required for basic setup.</p>
+            </div>
+            <div class="feature">
+                <h3>Read-Only &amp; Safe</h3>
+                <p>ClubCalendar never modifies your Wild Apricot data. It only reads events and displays them.</p>
+            </div>
+            <div class="feature">
+                <h3>Free Hosting Options</h3>
+                <p>Deploy on Google Cloud's free tier or your own server. No ongoing costs for most organizations.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="alt">
+    <div class="container">
+        <h2>How It Works</h2>
+        <div class="diagram">
+            <pre>
+┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+│  Wild Apricot   │      │   Sync Job      │      │   Your Site     │
+│    Events       │ ───► │  (every 15 min) │ ───► │   Calendar      │
+│                 │      │                 │      │   Widget        │
+└─────────────────┘      └─────────────────┘      └─────────────────┘
+            </pre>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Sync Job Runs</h4>
+                <p>Every 15 minutes, a sync job fetches your events from the Wild Apricot API</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Events Transformed</h4>
+                <p>Events are enhanced with auto-tags and saved as a JSON file</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Widget Loads Data</h4>
+                <p>The calendar widget fetches the JSON and displays your events</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h4>Visitors Browse</h4>
+                <p>Site visitors filter and explore events without touching WA data</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="setup">
+    <div class="container">
+        <h2>Choose Your Setup</h2>
+        <div class="options">
+            <div class="option">
+                <div class="option-header">
+                    <h3>Custom Server</h3>
+                    <p class="subtitle">Best if you have a web server</p>
+                </div>
+                <div class="option-body">
+                    <ul>
+                        <li>Use your existing Linux server</li>
+                        <li>Simple cron job setup</li>
+                        <li>Full control over your data</li>
+                        <li>No external dependencies</li>
+                        <li>Python 3.8+ required</li>
+                    </ul>
+                    <a href="docs/Custom_Server_Setup_Guide.html" class="btn">Setup Guide</a>
+                </div>
+            </div>
+            <div class="option">
+                <div class="option-header">
+                    <h3>Google Cloud</h3>
+                    <p class="subtitle">Best if you don't have a server</p>
+                </div>
+                <div class="option-body">
+                    <ul>
+                        <li>Uses Google Cloud free tier</li>
+                        <li>No server to maintain</li>
+                        <li>Highly reliable</li>
+                        <li>Automatic scaling</li>
+                        <li>Requires Google account</li>
+                    </ul>
+                    <a href="docs/Google_Cloud_Setup_Guide.html" class="btn">Setup Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="alt">
+    <div class="container">
+        <h2>Embed Code Example</h2>
+        <p style="text-align: center; margin-bottom: 20px; color: var(--text-light);">
+            Add this code to any Wild Apricot page using an HTML/Code gadget:
+        </p>
+        <div class="code-block">
+            <pre><span class="comment">&lt;!-- ClubCalendar Widget --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="string">"clubcalendar"</span><span class="tag">&gt;&lt;/div&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+window.CLUBCALENDAR_CONFIG = {
+    <span class="attr">eventsUrl</span>: <span class="string">'https://yourserver.com/data/events.json'</span>,
+    <span class="attr">title</span>: <span class="string">'Find Events'</span>,
+    <span class="attr">primaryColor</span>: <span class="string">'#2c5aa0'</span>
+};
+<span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="string">"https://yourserver.com/widget/clubcalendar-widget.js"</span><span class="tag">&gt;&lt;/script&gt;</span></pre>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>Documentation</h2>
+        <div class="docs-grid">
+            <div class="doc-card">
+                <h4>Wild Apricot Installation</h4>
+                <p>Step-by-step guide to add the calendar widget to your WA pages.</p>
+                <a href="docs/Wild_Apricot_Installation_Guide.html">Installation Guide →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Product Architecture</h4>
+                <p>Full technical architecture, data flow diagrams, and design decisions.</p>
+                <a href="docs/ClubCalendar_Product_Architecture.html">Read Documentation →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Event Tagging Guide</h4>
+                <p>How to tag events in Wild Apricot for optimal filtering.</p>
+                <a href="docs/Event_Tagging_Guide.html">Read Guide →</a>
+            </div>
+            <div class="doc-card">
+                <h4>JSON Schema Reference</h4>
+                <p>Technical specification for the events.json file format.</p>
+                <a href="docs/events_json_schema.html">View Schema →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Custom Server Setup</h4>
+                <p>Step-by-step guide for deploying on your own server.</p>
+                <a href="docs/Custom_Server_Setup_Guide.html">Setup Guide →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Google Cloud Setup</h4>
+                <p>Step-by-step guide for deploying on Google Cloud free tier.</p>
+                <a href="docs/Google_Cloud_Setup_Guide.html">Setup Guide →</a>
+            </div>
+            <div class="doc-card">
+                <h4>GitHub Repository</h4>
+                <p>Source code, sync scripts, and widget JavaScript.</p>
+                <a href="https://github.com/sbnewcomers/clubcalendar">View Repository →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="alt">
+    <div class="container">
+        <h2>Requirements</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Wild Apricot</h3>
+                <p>Admin access to create API credentials and edit pages. Must whitelist external JavaScript domain.</p>
+            </div>
+            <div class="feature">
+                <h3>For Custom Server</h3>
+                <p>Linux server with Python 3.8+, cron, and a web server (Apache/Nginx).</p>
+            </div>
+            <div class="feature">
+                <h3>For Google Cloud</h3>
+                <p>Google account. Uses free tier: Cloud Functions, Cloud Scheduler, Cloud Storage.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p><strong>ClubCalendar</strong> — Open source calendar widget for Wild Apricot organizations</p>
+        <p>
+            <a href="https://github.com/sbnewcomers/clubcalendar">GitHub</a> ·
+            <a href="https://github.com/sbnewcomers/clubcalendar/issues">Report Issue</a> ·
+            <a href="docs/ClubCalendar_Product_Architecture.html">Documentation</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+            Made for community organizations everywhere.
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

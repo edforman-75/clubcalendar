@@ -1,0 +1,4 @@
+# ClubCalendar Sync - Custom Server Dependencies
+# Only what's needed for running on your own server
+
+requests>=2.28.0

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild Apricot Installation Guide - ClubCalendar</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e4080;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+
+        .header nav a:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2rem; margin-top: 0; }
+        h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1.1rem; }
+
+        p {
+            margin: 1em 0;
+        }
+
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        /* Code */
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background: var(--bg-alt);
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <h1><a href="../index.html">ClubCalendar</a></h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="https://github.com/sbnewcomers/clubcalendar">GitHub</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+
+    <h1 id="wild-apricot-installation-guide">Wild Apricot Installation
+Guide</h1>
+<p>Step-by-step instructions for installing ClubCalendar into your Wild
+Apricot site.</p>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin, ensure you have:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Completed either the <a
+href="Custom_Server_Setup_Guide.md">Custom Server Setup</a> or <a
+href="Google_Cloud_Setup_Guide.md">Google Cloud Setup</a></label></li>
+<li><label><input type="checkbox" />Your <code>events.json</code> URL
+(e.g.,
+<code>https://yourserver.com/clubcalendar/data/yourorg/events.json</code>)</label></li>
+<li><label><input type="checkbox" />Your widget JavaScript URL (e.g.,
+<code>https://yourserver.com/clubcalendar/widget/clubcalendar-widget.js</code>)</label></li>
+<li><label><input type="checkbox" />Wild Apricot admin
+access</label></li>
+</ul>
+<hr />
+<h2 id="step-1-whitelist-your-external-domain">Step 1: Whitelist Your
+External Domain</h2>
+<p>Wild Apricot blocks external JavaScript by default. You must
+whitelist your server domain first.</p>
+<ol type="1">
+<li><p>Log into Wild Apricot as an administrator</p></li>
+<li><p>Click the <strong>gear icon</strong> (Settings) in the top-right
+corner</p></li>
+<li><p>In the left sidebar, click <strong>Site</strong> → <strong>Global
+settings</strong></p></li>
+<li><p>Scroll down to the <strong>External JavaScript
+authorization</strong> section</p></li>
+<li><p>Click <strong>Add URL</strong></p></li>
+<li><p>Enter your server domain:</p>
+<ul>
+<li>For custom server: <code>https://mail.sbnewcomers.org</code> (or
+your server URL)</li>
+<li>For Google Cloud: <code>https://storage.googleapis.com</code></li>
+</ul></li>
+<li><p>Click <strong>Save</strong> at the bottom of the page</p></li>
+</ol>
+<p><strong>Important:</strong> Without this step, the widget will not
+load.</p>
+<hr />
+<h2 id="step-2-create-a-calendar-page-optional">Step 2: Create a
+Calendar Page (Optional)</h2>
+<p>If you want the calendar on a dedicated page:</p>
+<ol type="1">
+<li><p>Go to <strong>Website</strong> → <strong>Site
+pages</strong></p></li>
+<li><p>Click <strong>Add page</strong></p></li>
+<li><p>Enter page details:</p>
+<ul>
+<li><strong>Page title:</strong> Events Calendar (or your preferred
+name)</li>
+<li><strong>Navigation label:</strong> Events</li>
+<li><strong>URL:</strong> events-calendar</li>
+<li><strong>Access:</strong> Choose who can view (Public, Members only,
+etc.)</li>
+</ul></li>
+<li><p>Click <strong>Save</strong></p></li>
+<li><p>The page opens in edit mode. Continue to Step 3.</p></li>
+</ol>
+<hr />
+<h2 id="step-3-add-the-calendar-widget">Step 3: Add the Calendar
+Widget</h2>
+<p>You can add the widget to any page that supports HTML gadgets.</p>
+<h3 id="a.-open-page-editor">3a. Open Page Editor</h3>
+<ol type="1">
+<li><p>Go to <strong>Website</strong> → <strong>Site
+pages</strong></p></li>
+<li><p>Find the page where you want the calendar</p></li>
+<li><p>Click <strong>Edit</strong> next to the page</p></li>
+</ol>
+<h3 id="b.-add-htmlcode-gadget">3b. Add HTML/Code Gadget</h3>
+<ol type="1">
+<li><p>Click where you want the calendar to appear</p></li>
+<li><p>Click <strong>Insert gadget</strong> in the toolbar</p></li>
+<li><p>Select <strong>HTML</strong> (or <strong>Code</strong> depending
+on your WA version)</p></li>
+<li><p>A code editor dialog opens</p></li>
+</ol>
+<h3 id="c.-paste-the-widget-code">3c. Paste the Widget Code</h3>
+<p>Copy and paste the following code into the HTML gadget:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ClubCalendar Widget --&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;clubcalendar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://YOUR-SERVER/clubcalendar/data/YOUR-ORG/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;https://YOUR-SERVER/clubcalendar/widget/clubcalendar-widget.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="d.-customize-the-configuration">3d. Customize the
+Configuration</h3>
+<p>Replace the placeholder values:</p>
+<table>
+<thead>
+<tr>
+<th>Placeholder</th>
+<th>Replace With</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>YOUR-SERVER</code></td>
+<td>Your server domain</td>
+<td><code>mail.sbnewcomers.org</code></td>
+</tr>
+<tr>
+<td><code>YOUR-ORG</code></td>
+<td>Your organization ID</td>
+<td><code>sbnc</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example for SBNC:</strong></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ClubCalendar Widget --&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;clubcalendar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://mail.sbnewcomers.org/clubcalendar/data/sbnc/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;https://mail.sbnewcomers.org/clubcalendar/widget/clubcalendar-widget.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="e.-save-the-gadget">3e. Save the Gadget</h3>
+<ol type="1">
+<li><p>Click <strong>OK</strong> or <strong>Save</strong> in the HTML
+gadget dialog</p></li>
+<li><p>The widget placeholder appears on the page</p></li>
+<li><p>Click <strong>Publish</strong> to save the page</p></li>
+</ol>
+<hr />
+<h2 id="step-4-verify-the-installation">Step 4: Verify the
+Installation</h2>
+<ol type="1">
+<li><p>View your page (not in edit mode)</p></li>
+<li><p>The calendar should load with your events</p></li>
+<li><p>Test the filters on the left sidebar</p></li>
+<li><p>Click an event to see details</p></li>
+</ol>
+<p><strong>If the calendar doesn’t load:</strong> - Check browser
+console for errors (F12 → Console) - Verify the domain is whitelisted
+(Step 1) - Verify the <code>eventsUrl</code> is correct and accessible -
+Try the URL directly in your browser to check if events.json loads</p>
+<hr />
+<h2 id="configuration-options">Configuration Options</h2>
+<p>Customize the widget by adding options to
+<code>CLUBCALENDAR_CONFIG</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Required</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://mail.sbnewcomers.org/clubcalendar/data/sbnc/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Optional - Appearance</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span>           <span class="co">// Widget header title</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span><span class="op">,</span>        <span class="co">// Main accent color (hex code)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Optional - Filters</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">showFilters</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span>              <span class="co">// Show filter sidebar (true/false)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">filterCategories</span><span class="op">:</span> [             <span class="co">// Which filters to show</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;activity&#39;</span><span class="op">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;time&#39;</span><span class="op">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;availability&#39;</span><span class="op">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">&#39;day&#39;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Optional - Calendar</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">defaultView</span><span class="op">:</span> <span class="st">&#39;dayGridMonth&#39;</span><span class="op">,</span>    <span class="co">// &#39;dayGridMonth&#39;, &#39;timeGridWeek&#39;, &#39;listWeek&#39;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">showWeekends</span><span class="op">:</span> <span class="kw">true</span>              <span class="co">// Show weekend days (true/false)</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<h3 id="color-examples">Color Examples</h3>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Hex Code</th>
+<th>Preview</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blue (default)</td>
+<td><code>#2c5aa0</code></td>
+<td>Club standard</td>
+</tr>
+<tr>
+<td>Green</td>
+<td><code>#2e7d32</code></td>
+<td>Nature/outdoors</td>
+</tr>
+<tr>
+<td>Purple</td>
+<td><code>#6a1b9a</code></td>
+<td>Elegant</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td><code>#e65100</code></td>
+<td>Energetic</td>
+</tr>
+<tr>
+<td>Teal</td>
+<td><code>#00796b</code></td>
+<td>Fresh</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="adding-calendar-to-multiple-pages">Adding Calendar to Multiple
+Pages</h2>
+<p>You can add the calendar widget to multiple pages:</p>
+<ol type="1">
+<li><strong>Home page</strong> - Show upcoming events</li>
+<li><strong>Dedicated events page</strong> - Full calendar with
+filters</li>
+<li><strong>Activity pages</strong> - Pre-filtered by activity type</li>
+</ol>
+<h3 id="pre-filtered-calendar-example">Pre-filtered Calendar
+Example</h3>
+<p>To show only hiking events on a hiking committee page:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://mail.sbnewcomers.org/clubcalendar/data/sbnc/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Hiking Events&#39;</span><span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2e7d32&#39;</span><span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">defaultFilters</span><span class="op">:</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">activity</span><span class="op">:</span> [<span class="st">&#39;hiking&#39;</span><span class="op">,</span> <span class="st">&#39;outdoors&#39;</span>]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<hr />
+<h2 id="adding-a-quick-links-section-optional">Adding a Quick Links
+Section (Optional)</h2>
+<p>Add a “quick filter” section above the calendar:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> style</span><span class="op">=</span><span class="st">&quot;margin-bottom: 20px; text-align: center;&quot;</span><span class="dt">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>Quick Filters:<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#&quot;</span><span class="ot"> onclick</span><span class="op">=</span><span class="st">&quot;filterByTag(&#39;activity:hiking&#39;); return false;&quot;</span><span class="dt">&gt;</span>Hiking<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> |</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#&quot;</span><span class="ot"> onclick</span><span class="op">=</span><span class="st">&quot;filterByTag(&#39;activity:wine&#39;); return false;&quot;</span><span class="dt">&gt;</span>Wine<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> |</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#&quot;</span><span class="ot"> onclick</span><span class="op">=</span><span class="st">&quot;filterByTag(&#39;activity:games&#39;); return false;&quot;</span><span class="dt">&gt;</span>Games<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> |</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;#&quot;</span><span class="ot"> onclick</span><span class="op">=</span><span class="st">&quot;clearFilters(); return false;&quot;</span><span class="dt">&gt;</span>Show All<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;clubcalendar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://mail.sbnewcomers.org/clubcalendar/data/sbnc/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">filterByTag</span>(tag) {</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">clubCalendarWidget</span>) {</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="bu">window</span><span class="op">.</span><span class="at">clubCalendarWidget</span><span class="op">.</span><span class="fu">filterByTag</span>(tag)<span class="op">;</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">clearFilters</span>() {</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="bu">window</span><span class="op">.</span><span class="at">clubCalendarWidget</span>) {</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">window</span><span class="op">.</span><span class="at">clubCalendarWidget</span><span class="op">.</span><span class="fu">clearFilters</span>()<span class="op">;</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;https://mail.sbnewcomers.org/clubcalendar/widget/clubcalendar-widget.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="calendar-shows-loading-forever">Calendar shows “Loading…”
+forever</h3>
+<p><strong>Cause:</strong> The events.json URL is not accessible</p>
+<p><strong>Fix:</strong> 1. Copy your <code>eventsUrl</code> and paste
+it directly into your browser 2. If it doesn’t load, check your server
+setup 3. Verify the sync job is running
+(<code>tail -f /var/log/clubcalendar-sync.log</code>)</p>
+<h3 id="calendar-shows-but-is-empty">Calendar shows but is empty</h3>
+<p><strong>Cause:</strong> No upcoming events or events are filtered
+out</p>
+<p><strong>Fix:</strong> 1. Check the date range in your browser’s URL
+bar 2. Verify events exist in Wild Apricot with future dates 3. Check
+that events aren’t marked as CANCELLED</p>
+<h3 id="javascript-error-in-console">JavaScript error in console</h3>
+<p><strong>Cause:</strong> External domain not whitelisted</p>
+<p><strong>Error message:</strong>
+<code>Refused to load script 'https://...' because it violates the Content Security Policy</code></p>
+<p><strong>Fix:</strong> 1. Return to Step 1 2. Add the exact domain
+shown in the error message 3. Save and refresh the page</p>
+<h3 id="styles-look-broken">Styles look broken</h3>
+<p><strong>Cause:</strong> CSS conflicts with Wild Apricot theme</p>
+<p><strong>Fix:</strong> The widget uses isolated styles, but if
+conflicts occur: 1. Try a different page layout 2. Contact support with
+screenshots</p>
+<h3 id="events-not-updating">Events not updating</h3>
+<p><strong>Cause:</strong> Sync job not running or cron stopped</p>
+<p><strong>Fix:</strong> 1. Check sync logs:
+<code>tail -50 /var/log/clubcalendar-sync.log</code> 2. Verify cron is
+running: <code>crontab -l</code> 3. Run sync manually to test:
+<code>bash    cd /opt/clubcalendar/sync    CLUBCAL_CONFIG_FILE=/etc/clubcalendar/config.json python3 sync.py</code></p>
+<hr />
+<h2 id="getting-help">Getting Help</h2>
+<ul>
+<li>Check the <a href="ClubCalendar_Product_Architecture.md">Product
+Architecture</a> for technical details</li>
+<li>Review the <a href="Event_Tagging_Guide.md">Event Tagging Guide</a>
+for tagging best practices</li>
+<li>Open an issue on <a
+href="https://github.com/sbnewcomers/clubcalendar/issues">GitHub</a></li>
+</ul>
+<hr />
+<h2 id="quick-reference">Quick Reference</h2>
+<p><strong>Widget embed code:</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;clubcalendar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;YOUR_EVENTS_JSON_URL&#39;</span><span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;YOUR_WIDGET_JS_URL&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><strong>Whitelist location:</strong> Settings → Site → Global
+settings → External JavaScript authorization</p>
+<p><strong>Gadget type:</strong> HTML or Code gadget</p>
+<hr />
+<p><em>For the latest documentation, visit the <a
+href="https://github.com/sbnewcomers/clubcalendar">ClubCalendar GitHub
+repository</a>.</em></p>
+</main>
+
+<footer class="footer">
+    <p>ClubCalendar — Open source calendar widget for Wild Apricot</p>
+</footer>
+
+</body>
+</html>

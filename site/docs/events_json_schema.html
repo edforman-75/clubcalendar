@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Reference - ClubCalendar</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e4080;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+
+        .header nav a:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2rem; margin-top: 0; }
+        h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1.1rem; }
+
+        p {
+            margin: 1em 0;
+        }
+
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        /* Code */
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background: var(--bg-alt);
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <h1><a href="../index.html">ClubCalendar</a></h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="https://github.com/sbnewcomers/clubcalendar">GitHub</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+
+    <h1 id="clubcalendar-events-json-schema">ClubCalendar Events JSON
+Schema</h1>
+<p>This document defines the JSON schema for the
+<code>events.json</code> file that the sync job produces and the widget
+consumes.</p>
+<hr />
+<h2 id="file-location">File Location</h2>
+<p>The file is hosted at a URL configured per organization:</p>
+<ul>
+<li><strong>Google Cloud Storage</strong>:
+<code>https://storage.googleapis.com/[bucket]/[org-id]/events.json</code></li>
+<li><strong>Custom Server</strong>:
+<code>https://[server]/clubcalendar/data/events.json</code></li>
+</ul>
+<hr />
+<h2 id="schema">Schema</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_warning&quot;</span><span class="fu">:</span> <span class="st">&quot;This file is auto-generated. Do not edit manually.&quot;</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_generated&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-09T15:30:00Z&quot;</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_orgId&quot;</span><span class="fu">:</span> <span class="st">&quot;sbnc&quot;</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;eventCount&quot;</span><span class="fu">:</span> <span class="dv">47</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;events&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">12345</span><span class="fu">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Happy Hikers: Morning Trail Walk&quot;</span><span class="fu">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;start&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-15T09:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;end&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-15T11:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;location&quot;</span><span class="fu">:</span> <span class="st">&quot;Elings Park, Santa Barbara&quot;</span><span class="fu">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;p&gt;Join us for a moderate 3-mile hike...&lt;/p&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12345&quot;</span><span class="fu">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationUrl&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12345#registration&quot;</span><span class="fu">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;committee:happy-hikers&quot;</span><span class="ot">,</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;activity:outdoors&quot;</span><span class="ot">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;newbie-friendly&quot;</span><span class="ot">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;time:morning&quot;</span><span class="ot">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;day:weekend&quot;</span><span class="ot">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;availability:open&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;spotsAvailable&quot;</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;isFull&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationEnabled&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;accessLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;Public&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 id="field-reference">Field Reference</h2>
+<h3 id="root-object">Root Object</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_warning</code></td>
+<td>string</td>
+<td>Human-readable warning not to edit</td>
+</tr>
+<tr>
+<td><code>_generated</code></td>
+<td>string (ISO 8601)</td>
+<td>When the file was generated</td>
+</tr>
+<tr>
+<td><code>_orgId</code></td>
+<td>string</td>
+<td>Organization identifier</td>
+</tr>
+<tr>
+<td><code>eventCount</code></td>
+<td>integer</td>
+<td>Number of events in the file</td>
+</tr>
+<tr>
+<td><code>events</code></td>
+<td>array</td>
+<td>Array of event objects</td>
+</tr>
+</tbody>
+</table>
+<h3 id="event-object">Event Object</h3>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>integer</td>
+<td>Yes</td>
+<td>Wild Apricot event ID</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Event title</td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td>string (ISO 8601)</td>
+<td>Yes</td>
+<td>Start date/time with timezone</td>
+</tr>
+<tr>
+<td><code>end</code></td>
+<td>string (ISO 8601)</td>
+<td>Yes</td>
+<td>End date/time with timezone</td>
+</tr>
+<tr>
+<td><code>location</code></td>
+<td>string</td>
+<td>No</td>
+<td>Event location</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string (HTML)</td>
+<td>No</td>
+<td>Event description (may contain HTML)</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td>string (URL)</td>
+<td>Yes</td>
+<td>Link to event details page</td>
+</tr>
+<tr>
+<td><code>registrationUrl</code></td>
+<td>string (URL)</td>
+<td>No</td>
+<td>Direct link to registration</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>array of strings</td>
+<td>Yes</td>
+<td>Combined manual + auto-generated tags</td>
+</tr>
+<tr>
+<td><code>spotsAvailable</code></td>
+<td>integer or null</td>
+<td>No</td>
+<td>Number of spots remaining (null = unlimited)</td>
+</tr>
+<tr>
+<td><code>isFull</code></td>
+<td>boolean</td>
+<td>Yes</td>
+<td>True if event is at capacity</td>
+</tr>
+<tr>
+<td><code>registrationEnabled</code></td>
+<td>boolean</td>
+<td>Yes</td>
+<td>Whether registration is open</td>
+</tr>
+<tr>
+<td><code>accessLevel</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>“Public” or “MembersOnly”</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tag-format">Tag Format</h2>
+<p>Tags follow a <code>category:value</code> format for structured
+data:</p>
+<pre><code>activity:hiking
+committee:happy-hikers
+cost:under-25
+time:morning
+availability:open</code></pre>
+<p>Simple boolean tags use single words:</p>
+<pre><code>newbie-friendly
+public-event
+outdoor</code></pre>
+<h3 id="standard-tag-categories">Standard Tag Categories</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 33%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Example Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>activity</code></td>
+<td>Type of activity</td>
+<td>hiking, wine, food, arts, games, fitness</td>
+</tr>
+<tr>
+<td><code>committee</code></td>
+<td>Organizing group</td>
+<td>happy-hikers, games, wine-appreciation</td>
+</tr>
+<tr>
+<td><code>cost</code></td>
+<td>Price range</td>
+<td>free, under-25, under-50, over-100</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>Time of day</td>
+<td>morning, afternoon, evening</td>
+</tr>
+<tr>
+<td><code>day</code></td>
+<td>Day of week</td>
+<td>weekend, weekday</td>
+</tr>
+<tr>
+<td><code>availability</code></td>
+<td>Registration status</td>
+<td>open, limited, full</td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td>Skill level</td>
+<td>beginner, intermediate, advanced</td>
+</tr>
+<tr>
+<td><code>location</code></td>
+<td>Indoor/outdoor</td>
+<td>indoor, outdoor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="auto-generated-tags">Auto-Generated Tags</h3>
+<p>These tags are derived automatically by the sync job:</p>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Logic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time:morning</code></td>
+<td>Start time before 12:00 PM</td>
+</tr>
+<tr>
+<td><code>time:afternoon</code></td>
+<td>Start time 12:00 PM - 5:00 PM</td>
+</tr>
+<tr>
+<td><code>time:evening</code></td>
+<td>Start time after 5:00 PM</td>
+</tr>
+<tr>
+<td><code>day:weekend</code></td>
+<td>Event on Saturday or Sunday</td>
+</tr>
+<tr>
+<td><code>availability:open</code></td>
+<td>More than 5 spots available or unlimited</td>
+</tr>
+<tr>
+<td><code>availability:limited</code></td>
+<td>1-5 spots remaining</td>
+</tr>
+<tr>
+<td><code>availability:full</code></td>
+<td>No spots available</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="example-full-file">Example: Full File</h2>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_warning&quot;</span><span class="fu">:</span> <span class="st">&quot;This file is auto-generated every 15 minutes. Do not edit manually.&quot;</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_generated&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-09T15:30:00Z&quot;</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_orgId&quot;</span><span class="fu">:</span> <span class="st">&quot;sbnc&quot;</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;eventCount&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;events&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">12345</span><span class="fu">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Happy Hikers: Morning Trail Walk&quot;</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;start&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-15T09:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;end&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-15T11:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;location&quot;</span><span class="fu">:</span> <span class="st">&quot;Elings Park&quot;</span><span class="fu">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;p&gt;A moderate 3-mile hike with ocean views.&lt;/p&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12345&quot;</span><span class="fu">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationUrl&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12345#registration&quot;</span><span class="fu">,</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;committee:happy-hikers&quot;</span><span class="ot">,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;activity:outdoors&quot;</span><span class="ot">,</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;newbie-friendly&quot;</span><span class="ot">,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cost:free&quot;</span><span class="ot">,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;time:morning&quot;</span><span class="ot">,</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;day:weekend&quot;</span><span class="ot">,</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;availability:open&quot;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;spotsAvailable&quot;</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;isFull&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationEnabled&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;accessLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;Public&quot;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">12346</span><span class="fu">,</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Wine Appreciation: Holiday Tasting&quot;</span><span class="fu">,</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;start&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-18T18:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;end&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-18T20:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;location&quot;</span><span class="fu">:</span> <span class="st">&quot;Member&#39;s Home&quot;</span><span class="fu">,</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;p&gt;Sample wines from local vineyards.&lt;/p&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12346&quot;</span><span class="fu">,</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationUrl&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12346#registration&quot;</span><span class="fu">,</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;committee:wine-appreciation&quot;</span><span class="ot">,</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;activity:wine&quot;</span><span class="ot">,</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cost:under-50&quot;</span><span class="ot">,</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;time:evening&quot;</span><span class="ot">,</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;availability:limited&quot;</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;spotsAvailable&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;isFull&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationEnabled&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;accessLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;MembersOnly&quot;</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">12347</span><span class="fu">,</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Games!: Friday Night Board Games&quot;</span><span class="fu">,</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;start&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-20T19:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;end&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-12-20T22:00:00-08:00&quot;</span><span class="fu">,</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;location&quot;</span><span class="fu">:</span> <span class="st">&quot;Community Center&quot;</span><span class="fu">,</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;p&gt;Join us for an evening of board games!&lt;/p&gt;&quot;</span><span class="fu">,</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12347&quot;</span><span class="fu">,</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationUrl&quot;</span><span class="fu">:</span> <span class="st">&quot;https://sbnewcomers.org/event-12347#registration&quot;</span><span class="fu">,</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;tags&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;committee:games&quot;</span><span class="ot">,</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;activity:games&quot;</span><span class="ot">,</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;newbie-friendly&quot;</span><span class="ot">,</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;cost:free&quot;</span><span class="ot">,</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;indoor&quot;</span><span class="ot">,</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;time:evening&quot;</span><span class="ot">,</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;day:weekend&quot;</span><span class="ot">,</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;availability:full&quot;</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>      <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;spotsAvailable&quot;</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;isFull&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;registrationEnabled&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;accessLevel&quot;</span><span class="fu">:</span> <span class="st">&quot;Public&quot;</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 id="widget-consumption">Widget Consumption</h2>
+<p>The widget fetches this file and:</p>
+<ol type="1">
+<li>Parses the <code>events</code> array</li>
+<li>Builds filter options from unique tag values</li>
+<li>Renders the calendar with FullCalendar</li>
+<li>Filters events client-side based on selected tags</li>
+</ol>
+<h3 id="filter-matching-logic">Filter Matching Logic</h3>
+<p>When a user selects a filter, the widget shows events that have the
+matching tag:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// User selects &quot;Outdoors&quot; from Interest Area dropdown</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Widget filters to events where tags.includes(&quot;activity:outdoors&quot;)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">matchesFilters</span>(<span class="bu">event</span><span class="op">,</span> selectedFilters) {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> selectedFilters<span class="op">.</span><span class="fu">every</span>(filter <span class="kw">=&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">event</span><span class="op">.</span><span class="at">tags</span><span class="op">.</span><span class="fu">includes</span>(filter)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<hr />
+<h2 id="versioning">Versioning</h2>
+<p>If the schema changes significantly, the file will include a version
+field:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;_schemaVersion&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="er">...</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Widgets should check this version and display a warning if
+incompatible.</p>
+</main>
+
+<footer class="footer">
+    <p>ClubCalendar — Open source calendar widget for Wild Apricot</p>
+</footer>
+
+</body>
+</html>

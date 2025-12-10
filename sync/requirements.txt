@@ -1,0 +1,16 @@
+# ClubCalendar Sync Job Dependencies
+#
+# For Google Cloud Functions:
+#   All dependencies below are needed
+#
+# For Custom Server:
+#   Only 'requests' is required
+#   Google Cloud libraries are optional
+
+# Required for all deployments
+requests>=2.28.0
+
+# Required for Google Cloud deployment only
+functions-framework==3.*
+google-cloud-storage>=2.10.0
+google-cloud-firestore>=2.11.0

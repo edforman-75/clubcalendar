@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud Setup Guide - ClubCalendar</title>
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-dark: #1e4080;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-alt: #f8f9fa;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+        }
+
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .header nav a {
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+
+        .header nav a:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2rem; margin-top: 0; }
+        h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+        h3 { font-size: 1.25rem; }
+        h4 { font-size: 1.1rem; }
+
+        p {
+            margin: 1em 0;
+        }
+
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        /* Code */
+        code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5em 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid var(--primary);
+            margin: 1.5em 0;
+            padding: 10px 20px;
+            background: var(--bg-alt);
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* Horizontal rule */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 60px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-inner {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            pre {
+                padding: 15px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <h1><a href="../index.html">ClubCalendar</a></h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="https://github.com/sbnewcomers/clubcalendar">GitHub</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+
+    <h1 id="clubcalendar-google-cloud-setup-guide">ClubCalendar Google Cloud
+Setup Guide</h1>
+<p>This guide walks you through setting up ClubCalendar on Google Cloud
+Platform (free tier).</p>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before you begin, you’ll need:</p>
+<ol type="1">
+<li><strong>Google Account</strong> - Any Gmail account works</li>
+<li><strong>Wild Apricot Admin Access</strong> - To get API
+credentials</li>
+<li><strong>30 minutes</strong> - For initial setup</li>
+</ol>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>You’ll set up these components:</p>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    Google Cloud Project                     │
+│                                                             │
+│  1. Cloud Storage    ─── Hosts events.json file             │
+│  2. Cloud Function   ─── Syncs events from WA               │
+│  3. Cloud Scheduler  ─── Triggers sync every 15 min         │
+│  4. Firestore        ─── Stores your configuration          │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+<p><strong>Estimated Cost:</strong> $0/month (free tier covers typical
+club usage)</p>
+<hr />
+<h2 id="step-1-create-a-google-cloud-project">Step 1: Create a Google
+Cloud Project</h2>
+<ol type="1">
+<li><p>Go to <a href="https://console.cloud.google.com/">Google Cloud
+Console</a></p></li>
+<li><p>Click <strong>Select a project</strong> (top left) → <strong>New
+Project</strong></p></li>
+<li><p>Enter project details:</p>
+<ul>
+<li><strong>Project name:</strong> <code>clubcalendar-yourorg</code>
+(e.g., <code>clubcalendar-sbnc</code>)</li>
+<li><strong>Organization:</strong> Leave as default</li>
+</ul></li>
+<li><p>Click <strong>Create</strong></p></li>
+<li><p>Wait for project creation, then select your new project</p></li>
+</ol>
+<hr />
+<h2 id="step-2-enable-required-apis">Step 2: Enable Required APIs</h2>
+<ol type="1">
+<li><p>Go to <strong>APIs &amp; Services</strong> →
+<strong>Library</strong></p></li>
+<li><p>Search for and enable each of these:</p>
+<ul>
+<li><strong>Cloud Functions API</strong></li>
+<li><strong>Cloud Scheduler API</strong></li>
+<li><strong>Cloud Storage API</strong></li>
+<li><strong>Cloud Firestore API</strong></li>
+<li><strong>Cloud Build API</strong></li>
+</ul></li>
+</ol>
+<p>For each, click the API name → <strong>Enable</strong></p>
+<hr />
+<h2 id="step-3-get-wild-apricot-api-credentials">Step 3: Get Wild
+Apricot API Credentials</h2>
+<ol type="1">
+<li><p>Log into your Wild Apricot admin</p></li>
+<li><p>Go to <strong>Settings</strong> → <strong>Authorized
+applications</strong></p></li>
+<li><p>Click <strong>Authorize application</strong></p></li>
+<li><p>Fill in:</p>
+<ul>
+<li><strong>Application name:</strong> ClubCalendar Sync</li>
+<li><strong>Permissions:</strong> Check all read permissions for Events,
+Contacts</li>
+</ul></li>
+<li><p>Click <strong>Authorize</strong></p></li>
+<li><p>Copy and save:</p>
+<ul>
+<li><strong>API key</strong> (you’ll need this later)</li>
+<li><strong>Client ID</strong></li>
+<li><strong>Client secret</strong></li>
+</ul></li>
+<li><p>Also note your <strong>Account ID</strong> from Settings →
+General</p></li>
+</ol>
+<hr />
+<h2 id="step-4-create-cloud-storage-bucket">Step 4: Create Cloud Storage
+Bucket</h2>
+<ol type="1">
+<li><p>Go to <strong>Cloud Storage</strong> →
+<strong>Buckets</strong></p></li>
+<li><p>Click <strong>Create bucket</strong></p></li>
+<li><p>Configure:</p>
+<ul>
+<li><strong>Name:</strong> <code>clubcalendar-yourorg-data</code> (must
+be globally unique)</li>
+<li><strong>Location type:</strong> Region</li>
+<li><strong>Location:</strong> Choose nearest to your members (e.g.,
+<code>us-west1</code>)</li>
+<li><strong>Storage class:</strong> Standard</li>
+<li><strong>Access control:</strong> Fine-grained</li>
+</ul></li>
+<li><p>Click <strong>Create</strong></p></li>
+<li><p>After creation, click your bucket → <strong>Permissions</strong>
+tab</p></li>
+<li><p>Click <strong>Grant Access</strong>:</p>
+<ul>
+<li><strong>Principal:</strong> <code>allUsers</code></li>
+<li><strong>Role:</strong> Storage Object Viewer</li>
+</ul></li>
+<li><p>Confirm to make bucket publicly readable</p></li>
+</ol>
+<hr />
+<h2 id="step-5-set-up-firestore-database">Step 5: Set Up Firestore
+Database</h2>
+<ol type="1">
+<li><p>Go to <strong>Firestore Database</strong></p></li>
+<li><p>Click <strong>Create database</strong></p></li>
+<li><p>Choose:</p>
+<ul>
+<li><strong>Native mode</strong> (not Datastore mode)</li>
+<li><strong>Location:</strong> Same region as your bucket</li>
+</ul></li>
+<li><p>Click <strong>Create</strong></p></li>
+</ol>
+<hr />
+<h2 id="step-6-deploy-the-sync-function">Step 6: Deploy the Sync
+Function</h2>
+<h3 id="option-a-using-google-cloud-console-easier">Option A: Using
+Google Cloud Console (Easier)</h3>
+<ol type="1">
+<li><p>Go to <strong>Cloud Functions</strong> → <strong>Create
+function</strong></p></li>
+<li><p>Configure basics:</p>
+<ul>
+<li><strong>Function name:</strong> <code>clubcalendar-sync</code></li>
+<li><strong>Region:</strong> Same as your bucket</li>
+<li><strong>Trigger type:</strong> HTTP</li>
+<li><strong>Authentication:</strong> Allow unauthenticated (we’ll secure
+with Scheduler)</li>
+</ul></li>
+<li><p>Click <strong>Next</strong></p></li>
+<li><p>Configure code:</p>
+<ul>
+<li><strong>Runtime:</strong> Python 3.11</li>
+<li><strong>Entry point:</strong> <code>sync_events</code></li>
+</ul></li>
+<li><p>Replace the code in <code>main.py</code> with the contents from:
+<code>/Users/edf/wa-dev/clubcalendar/sync/main.py</code></p></li>
+<li><p>Replace <code>requirements.txt</code> with:</p>
+<pre><code>functions-framework==3.*
+requests&gt;=2.28.0
+google-cloud-storage&gt;=2.10.0
+google-cloud-firestore&gt;=2.11.0</code></pre></li>
+<li><p>Click <strong>Deploy</strong></p></li>
+</ol>
+<h3 id="option-b-using-gcloud-cli-advanced">Option B: Using gcloud CLI
+(Advanced)</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install gcloud CLI if needed</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># https://cloud.google.com/sdk/docs/install</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Authenticate</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> auth login</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set project</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> config set project clubcalendar-yourorg</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Deploy function</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/clubcalendar/sync</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> functions deploy clubcalendar-sync <span class="dt">\</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--runtime</span> python311 <span class="dt">\</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--trigger-http</span> <span class="dt">\</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--allow-unauthenticated</span> <span class="dt">\</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--region</span> us-west1 <span class="dt">\</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--set-env-vars</span> <span class="st">&quot;WA_ACCOUNT_ID=YOUR_ID,WA_API_KEY=YOUR_KEY,GCS_BUCKET=clubcalendar-yourorg-data,ORG_ID=yourorg&quot;</span></span></code></pre></div>
+<hr />
+<h2 id="step-7-configure-environment-variables">Step 7: Configure
+Environment Variables</h2>
+<ol type="1">
+<li><p>Go to <strong>Cloud Functions</strong> → Click your
+function</p></li>
+<li><p>Click <strong>Edit</strong></p></li>
+<li><p>Go to <strong>Runtime, build, connections and security
+settings</strong></p></li>
+<li><p>Under <strong>Runtime environment variables</strong>,
+add:</p></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WA_ACCOUNT_ID</code></td>
+<td>Your WA account ID (e.g., <code>123456</code>)</td>
+</tr>
+<tr>
+<td><code>WA_API_KEY</code></td>
+<td>Your WA API key</td>
+</tr>
+<tr>
+<td><code>GCS_BUCKET</code></td>
+<td>Your bucket name (e.g., <code>clubcalendar-yourorg-data</code>)</td>
+</tr>
+<tr>
+<td><code>ORG_ID</code></td>
+<td>Your org identifier (e.g., <code>sbnc</code>)</td>
+</tr>
+</tbody>
+</table>
+<ol start="5" type="1">
+<li>Click <strong>Next</strong> → <strong>Deploy</strong></li>
+</ol>
+<hr />
+<h2 id="step-8-set-up-cloud-scheduler">Step 8: Set Up Cloud
+Scheduler</h2>
+<ol type="1">
+<li><p>Go to <strong>Cloud Scheduler</strong> → <strong>Create
+job</strong></p></li>
+<li><p>Configure:</p>
+<ul>
+<li><strong>Name:</strong> <code>clubcalendar-sync-trigger</code></li>
+<li><strong>Region:</strong> Same as your function</li>
+<li><strong>Frequency:</strong> <code>*/15 * * * *</code> (every 15
+minutes)</li>
+<li><strong>Timezone:</strong> Your timezone (e.g.,
+<code>America/Los_Angeles</code>)</li>
+</ul></li>
+<li><p>Configure target:</p>
+<ul>
+<li><strong>Target type:</strong> HTTP</li>
+<li><strong>URL:</strong> Your function URL (from Cloud Functions → your
+function → Trigger tab)</li>
+<li><strong>HTTP method:</strong> GET</li>
+</ul></li>
+<li><p>Click <strong>Create</strong></p></li>
+</ol>
+<hr />
+<h2 id="step-9-test-the-setup">Step 9: Test the Setup</h2>
+<ol type="1">
+<li><p>Go to <strong>Cloud Scheduler</strong></p></li>
+<li><p>Find your job and click <strong>Run now</strong></p></li>
+<li><p>Check results:</p>
+<ul>
+<li><strong>Cloud Functions</strong> → Your function →
+<strong>Logs</strong> tab</li>
+<li>Should see “Successfully synced X events”</li>
+</ul></li>
+<li><p>Verify the JSON file:</p>
+<ul>
+<li>Go to <strong>Cloud Storage</strong> → Your bucket</li>
+<li>Should see <code>yourorg/events.json</code></li>
+<li>Click it to verify contents</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="step-10-create-initial-configuration">Step 10: Create Initial
+Configuration</h2>
+<ol type="1">
+<li><p>Go to <strong>Firestore Database</strong></p></li>
+<li><p>Click <strong>Start collection</strong></p></li>
+<li><p>Create collection:</p>
+<ul>
+<li><strong>Collection ID:</strong> <code>organizations</code></li>
+</ul></li>
+<li><p>Add document:</p>
+<ul>
+<li><strong>Document ID:</strong> Your org ID (e.g.,
+<code>sbnc</code>)</li>
+</ul></li>
+<li><p>Add fields:</p></li>
+</ol>
+<pre><code>autoTagRules (array):
+  - type: &quot;name-prefix&quot;
+    pattern: &quot;Happy Hikers:&quot;
+    tag: &quot;committee:happy-hikers&quot;
+  - type: &quot;name-contains&quot;
+    pattern: &quot;wine&quot;
+    tag: &quot;activity:wine&quot;
+
+derivedFields (map):
+  timeOfDay (map):
+    morning (map):
+      before: 12
+    afternoon (map):
+      from: 12
+      before: 17
+    evening (map):
+      from: 17</code></pre>
+<hr />
+<h2 id="step-11-get-your-widget-urls">Step 11: Get Your Widget URLs</h2>
+<p>After successful setup, your URLs are:</p>
+<p><strong>Events JSON:</strong></p>
+<pre><code>https://storage.googleapis.com/clubcalendar-yourorg-data/yourorg/events.json</code></pre>
+<p><strong>Widget JavaScript</strong> (if hosted on GCS):</p>
+<pre><code>https://storage.googleapis.com/clubcalendar-yourorg-data/widget/clubcalendar-widget.js</code></pre>
+<hr />
+<h2 id="step-12-whitelist-google-cloud-storage-in-wild-apricot">Step 12:
+Whitelist Google Cloud Storage in Wild Apricot</h2>
+<p>Before embedding external JavaScript, you must add Google Cloud
+Storage to Wild Apricot’s authorized domains list.</p>
+<ol type="1">
+<li><p>Log into Wild Apricot admin</p></li>
+<li><p>Go to <strong>Settings</strong> → <strong>Site</strong> →
+<strong>Global settings</strong></p></li>
+<li><p>Scroll to <strong>External JavaScript
+authorization</strong></p></li>
+<li><p>Click <strong>Add URL</strong></p></li>
+<li><p>Enter: <code>https://storage.googleapis.com</code></p></li>
+<li><p>Click <strong>Save</strong></p></li>
+</ol>
+<p>Without this step, Wild Apricot will block the widget JavaScript from
+loading.</p>
+<hr />
+<h2 id="step-13-embed-in-wild-apricot">Step 13: Embed in Wild
+Apricot</h2>
+<ol type="1">
+<li><p>In WA, edit the page where you want the calendar</p></li>
+<li><p>Add a <strong>Code</strong> or <strong>HTML</strong>
+gadget</p></li>
+<li><p>Paste:</p></li>
+</ol>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ClubCalendar Widget --&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">&quot;clubcalendar&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">window</span><span class="op">.</span><span class="at">CLUBCALENDAR_CONFIG</span> <span class="op">=</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">eventsUrl</span><span class="op">:</span> <span class="st">&#39;https://storage.googleapis.com/clubcalendar-yourorg-data/yourorg/events.json&#39;</span><span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Find Events&#39;</span><span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">primaryColor</span><span class="op">:</span> <span class="st">&#39;#2c5aa0&#39;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;https://storage.googleapis.com/clubcalendar-yourorg-data/widget/clubcalendar-widget.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<ol start="4" type="1">
+<li>Save and preview</li>
+</ol>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="events-not-syncing">Events not syncing</h3>
+<ol type="1">
+<li>Check Cloud Function logs for errors</li>
+<li>Verify WA API credentials are correct</li>
+<li>Ensure API key has read access to Events</li>
+</ol>
+<h3 id="json-file-not-accessible">JSON file not accessible</h3>
+<ol type="1">
+<li>Verify bucket permissions (allUsers = Storage Object Viewer)</li>
+<li>Check bucket and org ID in function environment variables</li>
+</ol>
+<h3 id="scheduler-not-running">Scheduler not running</h3>
+<ol type="1">
+<li>Check job status in Cloud Scheduler</li>
+<li>Verify function URL is correct</li>
+<li>Check function logs for errors</li>
+</ol>
+<h3 id="cors-errors-in-browser">CORS errors in browser</h3>
+<ol type="1">
+<li><p>Add CORS configuration to bucket:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gsutil</span> cors set cors.json gs://your-bucket-name</span></code></pre></div>
+<p>With <code>cors.json</code>:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;origin&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;*&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;method&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;GET&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;responseHeader&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Content-Type&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;maxAgeSeconds&quot;</span><span class="fu">:</span> <span class="dv">3600</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div></li>
+</ol>
+<hr />
+<h2 id="cost-monitoring">Cost Monitoring</h2>
+<p>To ensure you stay within free tier:</p>
+<ol type="1">
+<li><p>Go to <strong>Billing</strong> → <strong>Budgets &amp;
+alerts</strong></p></li>
+<li><p>Create a budget:</p>
+<ul>
+<li><strong>Amount:</strong> $1 (or your preferred threshold)</li>
+<li><strong>Alerts:</strong> 50%, 90%, 100%</li>
+</ul></li>
+</ol>
+<p>Free tier limits (as of 2024):</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Free Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloud Functions</td>
+<td>2 million invocations/month</td>
+</tr>
+<tr>
+<td>Cloud Storage</td>
+<td>5 GB storage</td>
+</tr>
+<tr>
+<td>Cloud Scheduler</td>
+<td>3 jobs free</td>
+</tr>
+<tr>
+<td>Firestore</td>
+<td>1 GB storage, 50K reads/day</td>
+</tr>
+</tbody>
+</table>
+<p>A typical club running sync every 15 minutes uses: - ~3,000 function
+invocations/month - ~1 MB storage - 1 scheduler job</p>
+<p><strong>Well within free tier.</strong></p>
+<hr />
+<h2 id="updating-the-sync-function">Updating the Sync Function</h2>
+<p>When you need to update the function code:</p>
+<ol type="1">
+<li><p>Go to <strong>Cloud Functions</strong> → Your function</p></li>
+<li><p>Click <strong>Edit</strong></p></li>
+<li><p>Update the code</p></li>
+<li><p>Click <strong>Next</strong> → <strong>Deploy</strong></p></li>
+</ol>
+<p>Or with gcloud CLI:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gcloud</span> functions deploy clubcalendar-sync <span class="at">--source</span> .</span></code></pre></div>
+<hr />
+<h2 id="support">Support</h2>
+<p>If you encounter issues:</p>
+<ol type="1">
+<li>Check Cloud Function logs</li>
+<li>Verify all environment variables</li>
+<li>Test the function manually via Cloud Console</li>
+<li>Check Wild Apricot API status</li>
+</ol>
+<hr />
+<p><em>This guide is for ClubCalendar v1.0</em></p>
+</main>
+
+<footer class="footer">
+    <p>ClubCalendar — Open source calendar widget for Wild Apricot</p>
+</footer>
+
+</body>
+</html>
